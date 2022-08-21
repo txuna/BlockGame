@@ -264,6 +264,12 @@ class Player extends Actor{
         }
     }
 
+    // shoot bullet
+    shoot(){
+        let bullet = new Bullet(this.point.x, this.point.y, this.direction)
+        bullets.push(bullet)
+    }
+
     // 블럭 삭제시 해당 코드 확인 후 인벤토리 업데이트
     // bedrock은 삭제 금지 
     remove_block(){
@@ -439,6 +445,53 @@ class Npc extends Actor{
 
 }
 
+class Bullet{
+    constructor(x_pos, y_pos, d){
+        this.position = {
+            x: x_pos,
+            y: y_pos
+        }
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+        this.width = 5
+        this.height = 5
+        this.color = "black"
+        this.damage = 1
+        this.direction = d
+    }
+
+    move(){
+        if(this.direction == UP){
+            this.velocity.x = 0 
+            this.velocity.y = -10
+        }else if(this.direction == RIGHT){
+            this.velocity.x = 10
+            this.velocity.y = 0
+        }else if(this.direction == LEFT){
+            this.velocity.x = -10
+            this.velocity.y = 0 
+        }else if(this.direction == DOWN){
+            this.velocity.x = 0 
+            this.velocity.y = 10
+
+        }
+
+        this.position.x += this.velocity.x 
+        this.position.y += this.velocity.y
+    }
+
+    draw(){
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(){
+        this.move()
+        this.draw()
+    }
+}
 
 class Block{
     constructor(x_pos, y_pos, t){
@@ -505,6 +558,10 @@ const blocks = [
 
 ]
 
+const bullets = [
+
+]
+
 //300, 500 맵(canvas) 밖에 플레이어가 존재할 시 그에 맞춰서 맵 이동? 
 const player = new Player(350, 350, 20, 20, 5)
 
@@ -551,6 +608,9 @@ function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     blocks.forEach( (block) => {
         block.update()
+    })
+    bullets.forEach( bullet => {
+        bullet.update()
     })
     player.update()
 }
@@ -612,6 +672,11 @@ addEventListener('keyup', ({keyCode}) => {
             current_index = Emerald
             player.update_inventory()
             break
+
+        // bullet 
+        case 65:
+            player.shoot()
+            break 
         // X
         case 88:
             player.install_block()
