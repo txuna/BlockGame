@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body, *{
+            margin:0px;
+        }
+        div{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+        canvas{
+            background:#EEE;
+        }
+
+        .inventory{
+            position:relative;
+            top: 48px;
+            width : 50%;
+            height:50px;
+            background-color: #EEE;
+        }
+
+        .inventory ul{
+            display:flex;
+            height:100%;
+            margin:0px; 
+            padding:0px;
+        }
+
+        .item__box{
+            list-style: none;
+            background-color: #faedcd;
+            height:100%;
+            width: 50px; 
+            margin-left: 12px;
+            margin-right:12px;
+            padding:0px;
+            box-shadow: 0 2px 4px 0 rgba( 31, 38, 135, 0.37 );
+        }
+
+        .block{
+            height: 60%; 
+            width: 60%;
+            position: relative;
+            top:10%; 
+            left:10%; 
+            padding:0px;
+            margin:0px;
+        }
+
+        .stone{
+            background-color:#888C8D;
+        }
+
+        .grass{
+            background-color:#3a5a40;
+        }
+
+        .cobble{
+            background-color:#bfc0c0;
+        }
+
+        .dirt{
+            background-color:#9c6644;
+        }
+
+        .emerald{
+            background-color: #7bf1a8;
+        }
+
+        .bedrock{
+            background-color: #2C3333;
+        }
+
+        .item__box span{
+            position:relative; 
+            left:30px;
+        }
+
+        .active{
+            transform: scale(1.4);
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <canvas></canvas>
+        <div class="inventory">
+            <ul>
+                <!--
+                <li class="item__box">
+                    <div class="block"></div>
+                    <span>64</span>
+                </li>
+                <li class="item__box"></li>
+                <li class="item__box"></li>
+                <li class="item__box"></li>
+                <li class="item__box"></li>
+                -->
+            </ul> 
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
