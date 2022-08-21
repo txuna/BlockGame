@@ -20,6 +20,7 @@
 let current_index = 0 // Grass ~ Emerald
 
 const inventory_ul = document.querySelector(".inventory ul")
+const hud_div = document.querySelector(".hud")
 
 const canvas = document.querySelector('canvas')
 
@@ -70,7 +71,7 @@ const block_position_value = {
 }
 
 class Actor{
-    constructor(x_pos, y_pos, w, h, cl){
+    constructor(x_pos, y_pos, w, h, cl, hp){
         this.position = {
             x: x_pos, 
             y: y_pos 
@@ -83,6 +84,8 @@ class Actor{
         this.height = h
         this.color = cl 
         this.direction = UP
+        this.max_hp = hp
+        this.current_hp = hp
     }
 
     set_direction(dir){
@@ -131,8 +134,8 @@ class Actor{
 }
 
 class Player extends Actor{
-    constructor(x_pos, y_pos, w, h){
-        super(x_pos, y_pos, w, h, 'salmon')
+    constructor(x_pos, y_pos, w, h, hp){
+        super(x_pos, y_pos, w, h, 'salmon', hp)
         this.scroll_value = {
             x: 0,
             y: 0
@@ -168,6 +171,26 @@ class Player extends Actor{
     update(){
         this.move()
         this.draw()
+    }
+
+    // 헬스바 업데이트 
+    update_healthbar(){
+        this.current_hp = 3
+        hud_div.innerHTML = "" 
+        let count = 0;
+        for(let i=0;i<this.max_hp;i++){
+            let div = document.createElement("div")
+            if(count < this.current_hp){
+                div.classList.add("heart")
+                count+=1
+            }else{
+                div.classList.add("heart")
+                div.classList.add("blank")
+            }
+            
+            hud_div.appendChild(div)
+        }
+
     }
 
     // 인벤토리 업데이트
@@ -483,7 +506,7 @@ const blocks = [
 ]
 
 //300, 500 맵(canvas) 밖에 플레이어가 존재할 시 그에 맞춰서 맵 이동? 
-const player = new Player(350, 350, 20, 20)
+const player = new Player(350, 350, 20, 20, 5)
 
 const keys = {
     right:{
@@ -535,6 +558,7 @@ function animate(){
 function init(){
     init_map()
     player.update_inventory() 
+    player.update_healthbar()
     animate() 
 }
 
